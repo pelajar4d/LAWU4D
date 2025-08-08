@@ -1,9 +1,8 @@
 # 🔋 PANEL TOP-UP PULSA & PASCABAYAR TERPERCAYA
 
-**Layanan pengisian pulsa, paket data, token listrik, dan pembayaran tagihan (BPJS, PDAM, dll) dengan sistem otomatis 24 jam.**
+**Layanan pengisian pulsa,ewallet , all bank , dan shopee pay dengan sistem otomatis 24 jam.**
 
-![Banner Aplikasi](https://example.com/banner-topup.jpg)  
-*(Ganti dengan link gambar banner proyekmu)*
+<a href='https://postimg.cc/hfMtPdKw' target='_blank'><img src='https://i.postimg.cc/hfMtPdKw/131-a0b2dfa485124d758bda03f364f46cc5.png' border='0' alt='131-a0b2dfa485124d758bda03f364f46cc5'/></a>
 
 ## 🌟 FITUR LAYANAN
 - ✅ Top-Up Pulsa **Semua Operator** (Telkomsel, XL)
