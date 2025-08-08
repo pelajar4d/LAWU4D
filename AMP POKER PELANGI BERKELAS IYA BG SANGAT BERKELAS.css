@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POKER PELANGI SELALU DI HATI </title>
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #063a8f 100%);
+            color: #333;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Book Container */
+        .book-container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            height: 80vh;
+            perspective: 2000px;
+            margin: 0 auto;
+        }
+
+        /* Page Styles */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgb(0, 0, 0);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-in-out;
+            backface-visibility: hidden;
+        }
+
+        .page-1 {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .page-2 {
+            z-index: 1;
+            transform: rotateY(180deg);
+        }
+
+        .book-container.page-turned .page-1 {
+            transform: rotateY(-180deg);
+        }
+
+        .book-container.page-turned .page-2 {
+            transform: rotateY(0deg);
+        }
+
+        .page-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #c60000 0%, #002e5d 100%);
+        }
+
+        /* Light Beams */
+        .light-beam {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        .beam-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(100,200,255,0.2) 0%, rgba(100,200,255,0) 70%);
+        }
+
+        .beam-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+            background: radial-gradient(circle, rgba(255,150,100,0.15) 0%, rgba(255,150,100,0) 70%);
+        }
+
+        .beam-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 30%;
+            background: radial-gradient(circle, rgba(150,255,150,0.15) 0%, rgba(150,255,150,0) 70%);
+        }
+
+        /* Header Styles */
+        header {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .content-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .content-box p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #34495e;
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.5;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            background: #3498db;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background: #9b59b6;
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 100px;
+            height: 100px;
+            background: #2ecc71;
+            top: 60%;
+            left: 40%;
+            animation-delay: 4s;
+        }
+
+        /* Button Styles */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .modern-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            color: white;
+        }
+
+        .modern-button.secondary {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+
+        .modern-button.tertiary {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #9b59b6, #3498db);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modern-button.secondary::before {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+
+        .modern-button.tertiary::before {
+            background: linear-gradient(90deg, #c0392b, #e74c3c);
+        }
+
+        .modern-button:hover::before {
+            opacity: 1;
+        }
+
+        .modern-button span {
+            transition: transform 0.3s ease;
+        }
+
+        .modern-button svg {
+            transition: transform 0.3s ease;
+        }
+
+        .modern-button:hover span {
+            transform: translateX(5px);
+        }
+
+        .modern-button:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00ff26;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            padding: 10px 15px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            width: fit-content;
+            margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-arrow:hover {
+            color: #3498db;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-arrow#prev-page:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(10px) translateX(-10px);
+            }
+            75% {
+                transform: translateY(-10px) translateX(20px);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .book-container {
+                width: 95%;
+                height: 85vh;
+            }
+            
+            .page-content {
+                padding: 25px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .content-box {
+                padding: 20px;
+            }
+            
+            .content-box h2 {
+                font-size: 1.5rem;
+            }
+            
+            .modern-button {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <div class="book-container">
+        <!-- Halaman 1 -->
+        <div class="page page-1 active">
+            <div class="page-content">
+                <div class="light-beam beam-1"></div>
+                <div class="light-beam beam-2"></div>
+                <div class="light-beam beam-3"></div>
+                
+                <header>
+                    <h1 class="title">POKER PELANGI</h1>
+                    <p class="subtitle">WEBSITE DENGAN JUTAAN PEMAIN TERPERCAYA</p>
+                </header>
+                
+                <main>
+                    <div class="content-box">
+                        <h2>TENTANG POKER PELANGI </h2>
+                        <p>LINK BERDIRI SEJAK 2009 DENGAN JUTAAN PEMAIN DENGAN MENGHADIRKAN GAMPLAY MENARIK DI SETIAP PERMAINAN NYA DAN KAMI SIAP MELAYANI SELAMA 24JAM.</p>
+                    </div>
+                    
+                    <div class="floating-elements">
+                        <div class="floating-circle circle-1"></div>
+                        <div class="floating-circle circle-2"></div>
+                        <div class="floating-circle circle-3"></div>
+                    </div>
+                </main>
+                
+                <footer>
+                    <div class="nav-arrow" id="next-page">
+                        <span>CLIK DISINI</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        
+        <!-- Halaman 2 -->
+        <div class="page page-2">
+            <div class="page-content">
+                <div class="light-beam beam-1"></div>
+                <div class="light-beam beam-2"></div>
+                <div class="light-beam beam-3"></div>
+                
+                <header>
+                    <h1 class="title">LINK LOGIN </h1>
+                    <p class="subtitle">POKER PELANGI </p>
+                </header>
+                
+                <main>
+                    <div class="content-box">
+                        <h2>LINK LOGIN</h2>
+                        <p>DAFTAR SEKARANG DI POKER PELANGI UNTUK MENDAPATKAN KEMENANGAN MAKSIMAL:</p>
+                        
+                        <div class="button-container">
+                            <a href="https://desty.page/pelajar4dslot" class="modern-button" target="_blank">
+                                <span>LINK MASUK</span>
+                                <svg xmlns="http://www.w3.org/2000/svg"" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                            
+                            <a href="https://desty.page/pelajar4dslot" class="modern-button secondary" target="_blank">
+                                <span>LINK DAFTAR</span>
+                                <svg xmlns="http://www.w3.org/2000/svg"" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                </svg>
+                            </a>
+                            
+                            <a href="https://desty.page/pelajar4dslot" class="modern-button tertiary" target="_blank">
+                                <span>CHAT WHATSAPP</span>
+                                <svg xmlns="http://www.w3.org/2000/svg"" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="floating-elements">
+                        <div class="floating-circle circle-1"></div>
+                        <div class="floating-circle circle-2"></div>
+                        <div class="floating-circle circle-3"></div>
+                    </div>
+                </main>
+                
+                <footer>
+                    <div class="nav-arrow" id="prev-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                        </svg>
+                        <span>Halaman Sebelumnya</span>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookContainer = document.querySelector('.book-container');
+            const nextPageBtn = document.getElementById('next-page');
+            const prevPageBtn = document.getElementById('prev-page');
+            let isTurned = false;
+            
+            // Animasi untuk membalik halaman
+            function togglePage() {
+                isTurned = !isTurned;
+                if (isTurned) {
+                    bookContainer.classList.add('page-turned');
+                } else {
+                    bookContainer.classList.remove('page-turned');
+                }
+            }
+            
+            // Event listener untuk tombol next
+            nextPageBtn.addEventListener('click', togglePage);
+            
+            // Event listener untuk tombol previous
+            prevPageBtn.addEventListener('click', togglePage);
+            
+            // Swipe gesture untuk mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+            
+            document.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+            
+            function handleSwipe() {
+                const threshold = 50; // minimum swipe distance
+                
+                if (touchEndX < touchStartX - threshold && !isTurned) {
+                    // Swipe kiri (next page)
+                    togglePage();
+                } else if (touchEndX > touchStartX + threshold && isTurned) {
+                    // Swipe kanan (previous page)
+                    togglePage();
+                }
+            }
+            
+            // Efek hover untuk tombol
+            const buttons = document.querySelectorAll('.modern-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 7px 20px rgba(0, 0, 0, 0.15)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+                });
+            });
+            
+            // Animasi masuk elemen
+            const animateOnLoad = () => {
+                const elements = document.querySelectorAll('.title, .subtitle, .content-box, .nav-arrow');
+                elements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 200);
+                });
+            };
+            
+            // Set initial state for animation
+            const elements = document.querySelectorAll('.title, .subtitle, .content-box, .nav-arrow');
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            // Trigger animation after short delay
+            setTimeout(animateOnLoad, 300);
+        });
+    </script>
+</body>
+</html>
